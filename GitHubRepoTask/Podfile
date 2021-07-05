@@ -8,8 +8,6 @@ target 'GitHubRepoTask' do
   # Pods for GitHubRepoTask
    pod 'IQKeyboardManagerSwift'
    pod 'R.swift'
-   pod 'SwiftyJSON', '~> 4.0'
-   pod 'MBProgressHUD', '~> 1.1.0'
    pod 'CleanyModal'
    pod 'NVActivityIndicatorView/AppExtension'
    pod 'lottie-ios'

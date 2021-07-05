@@ -55,6 +55,7 @@ class GitHubRepoListModel: Codable {
     var labels_url : String?
     var releases_url : String?
     var deployments_url : String?
+    
 
 //    enum CodingKeys: String, CodingKey {
 //

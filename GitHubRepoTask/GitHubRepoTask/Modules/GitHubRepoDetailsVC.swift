@@ -60,7 +60,7 @@ extension GitHubRepoDetailsVC {
     }
     
     private func setUpView() {
-        self.repoImageView.roundCorners(.allCorners, radius: 56)
+        self.repoImageView.roundCorners(.allCorners, radius: 20)
     }
     
     private func bind() {

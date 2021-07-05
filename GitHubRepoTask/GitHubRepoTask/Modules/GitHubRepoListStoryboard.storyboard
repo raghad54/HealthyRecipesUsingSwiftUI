@@ -27,17 +27,20 @@
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="m5X-Cm-Hom"/>
-                                                    <constraint firstAttribute="width" constant="350" id="pFa-7X-CPV"/>
                                                 </constraints>
                                                 <textInputTraits key="textInputTraits"/>
                                             </searchBar>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="6Pb-8b-8Bt"/>
+                                        </constraints>
                                     </stackView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="YGP-wj-3BH" firstAttribute="centerX" secondItem="SzQ-i2-A5l" secondAttribute="centerX" id="V63-QP-deG"/>
+                                    <constraint firstItem="YGP-wj-3BH" firstAttribute="leading" secondItem="SzQ-i2-A5l" secondAttribute="leading" constant="22" id="bhR-Pi-PVj"/>
                                     <constraint firstAttribute="height" constant="45" id="mMk-z6-gq7"/>
                                     <constraint firstItem="YGP-wj-3BH" firstAttribute="centerY" secondItem="SzQ-i2-A5l" secondAttribute="centerY" id="vGW-2l-Sl5"/>
                                 </constraints>
@@ -60,6 +63,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="iGJ-3z-byc"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="repoListTableView" destination="txF-vR-NZT" id="9Aj-P0-fuR"/>
                         <outlet property="searchBar" destination="cCf-K2-hnw" id="d41-wF-d7T"/>

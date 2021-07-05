@@ -6,8 +6,6 @@
 //
 
 import Foundation
-import SwiftyJSON
-
 
 class APIClient {
 
@@ -34,7 +32,6 @@ class APIClient {
     enum RequestError: Error {
         case unknownError
         case connectionError
-        case authorizationError(JSON)
         case invalidRequest
         case notFound
         case invalidResponse
@@ -43,46 +40,44 @@ class APIClient {
     }
     static func requestData(url:String,method:HTTPMethod,parameters:parameters?,completion: @escaping (ApiResult)->Void) {
 
-        let header =  ["Content-Type": "application/x-www-form-urlencoded"]
+        DispatchQueue.global().asyncAfter(deadline: .now() + 1, execute: {
+            
+            let header =  ["Content-Type": "application/x-www-form-urlencoded"]
 
-        var urlRequest = URLRequest(url: URL(string: baseUrl+url)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
-        urlRequest.allHTTPHeaderFields = header
-        urlRequest.httpMethod = method.rawValue
-        if let parameters = parameters {
-            let parameterData = parameters.reduce("") { (result, param) -> String in
-                return result + "&\(param.key)=\(param.value as! String)"
-            }.data(using: .utf8)
-            urlRequest.httpBody = parameterData
-        }
-        URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-            if let error = error {
-                print(error)
-                completion(ApiResult.failure(.connectionError))
-            }else if let data = data ,let responseCode = response as? HTTPURLResponse {
-                do {
-//                    let responseJson = try JSON(data: data)
-//                    print("responseCode : \(responseCode.statusCode)")
-//                    print("responseJSON : \(responseJson)")
-                    let repoList = try! JSONDecoder().decode([GitHubRepoListModel].self, from: data)
-                    print([repoList].count)
-                    switch responseCode.statusCode {
-                    case 200:
-                        completion(ApiResult.success(repoList))
-                    case 400...499:
-                        completion(ApiResult.failure(.authorizationError(JSON(rawValue: repoList) ?? "")))
-                    case 500...599:
-                    completion(ApiResult.failure(.serverError))
-                    default:
+            var urlRequest = URLRequest(url: URL(string: baseUrl+url)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
+            urlRequest.allHTTPHeaderFields = header
+            urlRequest.httpMethod = method.rawValue
+            if let parameters = parameters {
+                let parameterData = parameters.reduce("") { (result, param) -> String in
+                    return result + "&\(param.key)=\(param.value as! String)"
+                }.data(using: .utf8)
+                urlRequest.httpBody = parameterData
+            }
+            URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+                if let error = error {
+                    print(error)
+                    completion(ApiResult.failure(.connectionError))
+                }else if let data = data ,let responseCode = response as? HTTPURLResponse {
+                    do {
+                        let repoList = try! JSONDecoder().decode([GitHubRepoListModel].self, from: data)
+                        switch responseCode.statusCode {
+                        case 200:
+                            completion(ApiResult.success(repoList))
+                        case 500...599:
+                        completion(ApiResult.failure(.serverError))
+                        default:
+                            completion(ApiResult.failure(.unknownError))
+                            break
+                        }
+                    }
+                    catch let parseJSONError {
                         completion(ApiResult.failure(.unknownError))
-                        break
+                        print("error on parsing request to JSON : \(parseJSONError)")
                     }
                 }
-                catch let parseJSONError {
-                    completion(ApiResult.failure(.unknownError))
-                    print("error on parsing request to JSON : \(parseJSONError)")
-                }
-            }
-        }.resume()
+            }.resume()
+        })
+        
     }
 }
 

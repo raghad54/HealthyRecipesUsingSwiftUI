@@ -41,7 +41,7 @@ class GitHubTableCell: UITableViewCell {
     func bind(data: GitHubRepoListModel) {
         self.repoNameLable.text = data.name
         self.repoOwnerNameLable.text = data.owner?.login
-        //self.repoCreatedAtLable.text = data.o
+        self.repoCreatedAtLable.text = data.owner?.url
         let url = URL(string: data.owner?.avatar_url ?? "")
         let data = try? Data(contentsOf: url!)
         self.repoAvatarImage.image = UIImage(data: data!)

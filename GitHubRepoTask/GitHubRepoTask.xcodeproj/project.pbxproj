@@ -183,8 +183,8 @@
 		041CDACF269273E7004E1BCD /* GitHubRepoTask */ = {
 			isa = PBXGroup;
 			children = (
-				041CDB1226928D26004E1BCD /* Application */,
 				041CDB7326928F1F004E1BCD /* Modules */,
+				041CDB1226928D26004E1BCD /* Application */,
 				041CDBA426933BCB004E1BCD /* Helper */,
 				041CDB9F2693362A004E1BCD /* Extensions */,
 			);

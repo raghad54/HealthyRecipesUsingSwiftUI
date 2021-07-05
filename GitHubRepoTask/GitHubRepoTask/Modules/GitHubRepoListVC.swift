@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+
 // MARK: - ...  ViewController - Vars
 class GitHubRepoListVC: BaseController {
     var presenter: GitHubRepoListPresenter?
@@ -24,7 +25,6 @@ class GitHubRepoListVC: BaseController {
     
     var repoListArray = [GitHubRepoListModel]()
     var searchData = [GitHubRepoListModel]()
-   // var filteredReposName: [String]!
     var searchController: UISearchController?
     var isSearching = false
     var isLoading = false
@@ -75,7 +75,7 @@ extension GitHubRepoListVC {
     private func setUpNib() {
         repoListTableView.register(UINib(nibName: GitHubTableCell.ID, bundle: nil), forCellReuseIdentifier: GitHubTableCell.ID)
     }
-    
+    // pull To Refresh 
     func setupRefercher() {
         refreshControl = UIRefreshControl()
         if #available(iOS 10.0, *) {
@@ -87,7 +87,6 @@ extension GitHubRepoListVC {
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
     }
     @objc private func refreshData() {
-        // Fetch Weather Data
         startLoading()
         presenter?.fetchRepoList()
     }
@@ -101,7 +100,6 @@ extension GitHubRepoListVC: GitHubRepoListViewContract {
         self.stopLoading()
         self.repoListArray = data ?? []
         if self.repoListArray.isEmpty {
-            
         } else  {
            
             self.repoListTableView.reloadData()
@@ -114,7 +112,7 @@ extension GitHubRepoListVC: GitHubRepoListViewContract {
     
 }
 
-extension GitHubRepoListVC: UITableViewDataSource, UITableViewDelegate {
+extension GitHubRepoListVC: UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isSearching  {
             return searchData.count
@@ -134,17 +132,29 @@ extension GitHubRepoListVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if !isLoading && indexPath.row == repoListArray.count - 5 {
-               isLoading = true
+        if !(indexPath.row + 1 < self.repoListArray.count) {
+               self.isLoading = true;
                self.presenter?.fetchRepoList()
+
            }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let imageURl = repoListArray[indexPath.row].owner?.avatar_url
-        let repoName =  repoListArray[indexPath.row].name
-        let repoURl =  repoListArray[indexPath.row].owner?.url
+        let imageURl: String?
+        let repoName: String?
+        let repoURl: String?
+        
+        if isSearching {
+            imageURl = searchData[indexPath.row].owner?.avatar_url
+            repoName = searchData[indexPath.row].name
+            repoURl =  searchData[indexPath.row].owner?.url
+            router?.pushToDetails(imageUrl: imageURl , repoName: repoName, repoUrl: repoURl)
+        } else {
+        imageURl = repoListArray[indexPath.row].owner?.avatar_url
+        repoName = repoListArray[indexPath.row].name
+        repoURl =  repoListArray[indexPath.row].owner?.url
         router?.pushToDetails(imageUrl: imageURl , repoName: repoName, repoUrl: repoURl)
+        }
     }
 }
 
