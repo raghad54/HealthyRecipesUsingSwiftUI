@@ -17,4 +17,5 @@ protocol GitHubRepoListViewContract: PresentingViewProtocol {
 }
 // MARK: - ...  Router Contract
 protocol GitHubRepoListRouterContract: Router, RouterProtocol {
+    func pushToDetails(imageUrl: String?, repoName: String?, repoUrl: String?) 
 }

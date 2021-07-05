@@ -17,5 +17,8 @@ class GitHubRepoListRouter: Router {
 }
 
 extension GitHubRepoListRouter: GitHubRepoListRouterContract {
+    func pushToDetails(imageUrl: String?, repoName: String?, repoUrl: String?) {
+        view?.push(GitHubRepoDetailsVC.create(repoImageURL: imageUrl ?? "", repoName: repoName ?? "", repoURL: repoUrl ?? ""), true)
+    }
     
 }

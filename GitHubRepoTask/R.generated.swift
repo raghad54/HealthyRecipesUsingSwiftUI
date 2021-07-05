@@ -140,14 +140,54 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
 
-  /// This `R.file` struct is generated, and contains static references to 1 files.
+  /// This `R.file` struct is generated, and contains static references to 6 files.
   struct file {
     /// Resource file `README.md`.
     static let readmeMd = Rswift.FileResource(bundle: R.hostingBundle, name: "README", pathExtension: "md")
+    /// Resource file `loading.json`.
+    static let loadingJson = Rswift.FileResource(bundle: R.hostingBundle, name: "loading", pathExtension: "json")
+    /// Resource file `loading1.json`.
+    static let loading1Json = Rswift.FileResource(bundle: R.hostingBundle, name: "loading1", pathExtension: "json")
+    /// Resource file `loading2.json`.
+    static let loading2Json = Rswift.FileResource(bundle: R.hostingBundle, name: "loading2", pathExtension: "json")
+    /// Resource file `loading3.json`.
+    static let loading3Json = Rswift.FileResource(bundle: R.hostingBundle, name: "loading3", pathExtension: "json")
+    /// Resource file `loading4.json`.
+    static let loading4Json = Rswift.FileResource(bundle: R.hostingBundle, name: "loading4", pathExtension: "json")
 
     /// `bundle.url(forResource: "README", withExtension: "md")`
     static func readmeMd(_: Void = ()) -> Foundation.URL? {
       let fileResource = R.file.readmeMd
+      return fileResource.bundle.url(forResource: fileResource)
+    }
+
+    /// `bundle.url(forResource: "loading", withExtension: "json")`
+    static func loadingJson(_: Void = ()) -> Foundation.URL? {
+      let fileResource = R.file.loadingJson
+      return fileResource.bundle.url(forResource: fileResource)
+    }
+
+    /// `bundle.url(forResource: "loading1", withExtension: "json")`
+    static func loading1Json(_: Void = ()) -> Foundation.URL? {
+      let fileResource = R.file.loading1Json
+      return fileResource.bundle.url(forResource: fileResource)
+    }
+
+    /// `bundle.url(forResource: "loading2", withExtension: "json")`
+    static func loading2Json(_: Void = ()) -> Foundation.URL? {
+      let fileResource = R.file.loading2Json
+      return fileResource.bundle.url(forResource: fileResource)
+    }
+
+    /// `bundle.url(forResource: "loading3", withExtension: "json")`
+    static func loading3Json(_: Void = ()) -> Foundation.URL? {
+      let fileResource = R.file.loading3Json
+      return fileResource.bundle.url(forResource: fileResource)
+    }
+
+    /// `bundle.url(forResource: "loading4", withExtension: "json")`
+    static func loading4Json(_: Void = ()) -> Foundation.URL? {
+      let fileResource = R.file.loading4Json
       return fileResource.bundle.url(forResource: fileResource)
     }
 
@@ -238,6 +278,7 @@ struct _R: Rswift.Validatable {
       }
 
       static func validate() throws {
+        if #available(iOS 13.0, *) { if UIKit.UIImage(systemName: "backward.frame") == nil { throw Rswift.ValidationError(description: "[R.swift] System image named 'backward.frame' is used in storyboard 'GitHubRepoDetailsStoryboard', but couldn't be loaded.") } }
         if #available(iOS 11.0, tvOS 11.0, *) {
         }
         if _R.storyboard.gitHubRepoDetailsStoryboard().gitHubRepoDetailsVC() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'gitHubRepoDetailsVC' could not be loaded from storyboard 'GitHubRepoDetailsStoryboard' as 'GitHubRepoDetailsVC'.") }

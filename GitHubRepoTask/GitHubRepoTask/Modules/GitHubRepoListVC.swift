@@ -27,20 +27,22 @@ class GitHubRepoListVC: BaseController {
    // var filteredReposName: [String]!
     var searchController: UISearchController?
     var isSearching = false
+    var isLoading = false
 }
 
 // MARK: - ...  LifeCycle
 extension GitHubRepoListVC {
     override func viewDidLoad() {
         super.viewDidLoad()
+        startLoading()
         setup()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         presenter = .init()
         presenter?.view = self
-        startLoading()
         presenter?.fetchRepoList()
+        setupRefercher() 
         router = .init()
         router?.view = self
     }
@@ -73,29 +75,39 @@ extension GitHubRepoListVC {
     private func setUpNib() {
         repoListTableView.register(UINib(nibName: GitHubTableCell.ID, bundle: nil), forCellReuseIdentifier: GitHubTableCell.ID)
     }
+    
+    func setupRefercher() {
+        refreshControl = UIRefreshControl()
+        if #available(iOS 10.0, *) {
+            repoListTableView.refreshControl = refreshControl
+        } else {
+            repoListTableView.addSubview(refreshControl)
+        }
+        refreshControl.tintColor = .green
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+    }
+    @objc private func refreshData() {
+        // Fetch Weather Data
+        startLoading()
+        presenter?.fetchRepoList()
+    }
+    
+    
 }
 // MARK: - ...  View Contract
 extension GitHubRepoListVC: GitHubRepoListViewContract {
     func didFetchSuccessfully(data: [GitHubRepoListModel]?) {
-        stopLoading()
+        DispatchQueue.main.async {
+        self.stopLoading()
         self.repoListArray = data ?? []
         if self.repoListArray.isEmpty {
             
         } else  {
-            DispatchQueue.main.async {
-                self.repoListTableView.reloadData()
+           
+            self.repoListTableView.reloadData()
             }
         }
     }
-    
-    func startLoading() {
-      //  self.showIndicator(withTitle: "Appricate your Waiting", and: "Loading ...")
-    }
-    
-    func stopLoading() {
-       // self.hideIndicator()
-    }
-    
     func didError(error: String?) {
         
     }
@@ -107,7 +119,7 @@ extension GitHubRepoListVC: UITableViewDataSource, UITableViewDelegate {
         if isSearching  {
             return searchData.count
         } else {
-            return repoListArray.count
+            return self.repoListArray.count
       }
     }
     
@@ -119,6 +131,20 @@ extension GitHubRepoListVC: UITableViewDataSource, UITableViewDelegate {
             cell.bind(data: repoListArray[indexPath.row])
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if !isLoading && indexPath.row == repoListArray.count - 5 {
+               isLoading = true
+               self.presenter?.fetchRepoList()
+           }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let imageURl = repoListArray[indexPath.row].owner?.avatar_url
+        let repoName =  repoListArray[indexPath.row].name
+        let repoURl =  repoListArray[indexPath.row].owner?.url
+        router?.pushToDetails(imageUrl: imageURl , repoName: repoName, repoUrl: repoURl)
     }
 }
 

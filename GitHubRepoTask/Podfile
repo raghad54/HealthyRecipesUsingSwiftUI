@@ -11,5 +11,7 @@ target 'GitHubRepoTask' do
    pod 'SwiftyJSON', '~> 4.0'
    pod 'MBProgressHUD', '~> 1.1.0'
    pod 'CleanyModal'
+   pod 'NVActivityIndicatorView/AppExtension'
+   pod 'lottie-ios'
 
 end

@@ -1,7 +1,9 @@
 PODS:
   - CleanyModal (1.0.3)
   - IQKeyboardManagerSwift (6.5.6)
+  - lottie-ios (3.1.9)
   - MBProgressHUD (1.1.0)
+  - NVActivityIndicatorView/AppExtension (4.8.0)
   - R.swift (5.3.0):
     - R.swift.Library (~> 5.3.0)
   - R.swift.Library (5.3.0)
@@ -10,7 +12,9 @@ PODS:
 DEPENDENCIES:
   - CleanyModal
   - IQKeyboardManagerSwift
+  - lottie-ios
   - MBProgressHUD (~> 1.1.0)
+  - NVActivityIndicatorView/AppExtension
   - R.swift
   - SwiftyJSON (~> 4.0)
 
@@ -18,7 +22,9 @@ SPEC REPOS:
   trunk:
     - CleanyModal
     - IQKeyboardManagerSwift
+    - lottie-ios
     - MBProgressHUD
+    - NVActivityIndicatorView
     - R.swift
     - R.swift.Library
     - SwiftyJSON
@@ -26,11 +32,13 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   CleanyModal: 5e5fece5b1de97b47ea091f6390ec2b16bfa2f20
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
+  lottie-ios: 3a3758ef5a008e762faec9c9d50a39842f26d124
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
+  NVActivityIndicatorView: d24b7ebcf80af5dcd994adb650e2b6c93379270f
   R.swift: 4170fb7161c67be3bc1a847040b79367d69c419f
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
 
-PODFILE CHECKSUM: f71cbe5c1309abcb87392398b50307d01aa02f68
+PODFILE CHECKSUM: 61f4935fbb91ea84e5c80afa7bb74f97b85f9ca4
 
 COCOAPODS: 1.9.3
