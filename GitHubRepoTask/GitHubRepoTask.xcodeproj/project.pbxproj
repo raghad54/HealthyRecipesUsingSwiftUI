@@ -14,6 +14,7 @@
 		041CDADD269273EB004E1BCD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 041CDADB269273EB004E1BCD /* LaunchScreen.storyboard */; };
 		041CDAE8269273EC004E1BCD /* GitHubRepoTaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041CDAE7269273EC004E1BCD /* GitHubRepoTaskTests.swift */; };
 		041CDAF3269273ED004E1BCD /* GitHubRepoTaskUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041CDAF2269273ED004E1BCD /* GitHubRepoTaskUITests.swift */; };
+		041CDB0126928A9F004E1BCD /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 041CDB0026928A9F004E1BCD /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		041CDAEE269273ED004E1BCD /* GitHubRepoTaskUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitHubRepoTaskUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		041CDAF2269273ED004E1BCD /* GitHubRepoTaskUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubRepoTaskUITests.swift; sourceTree = "<group>"; };
 		041CDAF4269273ED004E1BCD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		041CDB0026928A9F004E1BCD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 		041CDAC4269273E7004E1BCD = {
 			isa = PBXGroup;
 			children = (
+				041CDB0026928A9F004E1BCD /* README.md */,
 				041CDACF269273E7004E1BCD /* GitHubRepoTask */,
 				041CDAE6269273EC004E1BCD /* GitHubRepoTaskTests */,
 				041CDAF1269273ED004E1BCD /* GitHubRepoTaskUITests */,
@@ -230,6 +233,7 @@
 			files = (
 				041CDADD269273EB004E1BCD /* LaunchScreen.storyboard in Resources */,
 				041CDADA269273EB004E1BCD /* Assets.xcassets in Resources */,
+				041CDB0126928A9F004E1BCD /* README.md in Resources */,
 				041CDAD8269273E7004E1BCD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
