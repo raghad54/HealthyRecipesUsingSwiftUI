@@ -7,23 +7,29 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct FilterBarView: View {
     @Binding var selectedFilter: String
+    var onFilterChange: (String) -> Void
     
-    let filters = ["ALL", "Low Sugar", "Dairy-Free", "Vegan"]
+    let filters = ["ALL", "Low Sugar", "Dairy-Free" ,"Vegan"] // Example filters
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
+            HStack(spacing: 10) {
                 ForEach(filters, id: \.self) { filter in
                     Button(action: {
                         selectedFilter = filter
+                        onFilterChange(filter)
                     }) {
                         Text(filter)
-                            .padding()
+                            .padding(.horizontal, 16) // Adjust padding to fit text
+                            .padding(.vertical, 8) // Add vertical padding for height
                             .background(selectedFilter == filter ? Color.blue : Color.gray)
                             .foregroundColor(.white)
-                            .cornerRadius(10)
+                            .clipShape(Capsule()) // Rounded edges
+                            .shadow(radius: 2) // Optional: Add a shadow for better visibility
                     }
                 }
             }
@@ -32,6 +38,10 @@ struct FilterBarView: View {
     }
 }
 
+
+
 #Preview {
-    FilterBarView(selectedFilter: .constant("ALL"))
+    FilterBarView(selectedFilter: .constant("ALL")) { _ in
+        // No action needed for preview
+    }
 }

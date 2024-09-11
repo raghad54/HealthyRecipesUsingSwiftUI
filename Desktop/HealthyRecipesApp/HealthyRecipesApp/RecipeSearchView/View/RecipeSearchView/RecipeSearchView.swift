@@ -5,6 +5,7 @@
 //  Created by Raghad's Mac on 09/09/2024.
 //
 
+
 import SwiftUI
 
 struct RecipeSearchView: View {
@@ -13,38 +14,51 @@ struct RecipeSearchView: View {
     @StateObject var viewModel = RecipeViewModel()
     
     var body: some View {
-        NavigationView { // Ensure to wrap the view in NavigationView
+        NavigationView {
             VStack {
-                TextField("Search for recipes...", text: $searchText)
+                HStack {
+                    TextField("Search for recipes...", text: $searchText, onCommit: {
+                        performSearch()
+                    })
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
-                
-                FilterBarView(selectedFilter: $selectedFilter) // Add FilterBarView here
-                
-                Button(action: {
-                    let filters = selectedFilter == "ALL" ? [] : [selectedFilter]
-                    viewModel.recipes.removeAll() // Clear previous results
-                    viewModel.currentPage = 0 // Reset pagination
-                    viewModel.searchRecipes(query: searchText, filters: filters)
-                }) {
-                    Text("Search")
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                    
+                    Button(action: {
+                        performSearch()
+                    }) {
+                        Image(systemName: "magnifyingglass")
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .clipShape(Circle())
+                    }
                 }
-                .padding(.horizontal)
                 
-                RecipeListView(recipes: viewModel.recipes, isLoading: viewModel.isLoading) {
-                    let filters = selectedFilter == "ALL" ? [] : [selectedFilter]
-                    viewModel.loadMore(query: searchText, filters: filters)
-                }
+                FilterBarView(selectedFilter: $selectedFilter, onFilterChange: { filter in
+                    self.selectedFilter = filter
+                    performSearch()
+                })
+                
+                RecipeListView(
+                    recipes: viewModel.recipes,
+                    loadMore: {
+                        let filters = selectedFilter == "ALL" ? [] : [selectedFilter]
+                        viewModel.loadMore(query: searchText, filters: filters)
+                    },
+                    isLoading: viewModel.isLoading
+                )
             }
             .padding()
+            .navigationTitle("Recipes")
         }
     }
+    
+    private func performSearch() {
+        let filters = selectedFilter == "ALL" ? [] : [selectedFilter]
+        viewModel.searchRecipes(query: searchText, filters: filters)
+    }
 }
+
 
 
 
