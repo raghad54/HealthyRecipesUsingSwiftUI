@@ -1,0 +1,61 @@
+# Xcode
+DerivedData/
+.idea/
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# Build artifacts
+build/
+Build/
+
+# macOS files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk drives
+.Spotlight-V100
+.Trashes
+
+# User-specific settings
+*.swp
+*.lock
+*~
+
+# Logs
+*.log
+
+# Temporary files created by editors
+*.sublime-workspace
+*.tmp
+*.temp
+*~backup
+*~debris
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Xcode environment overrides
+.envrc
+
+# SwiftPM binary artifacts
+.swiftpm/xcode/xcdebugger
+
+# Exclude Pods directory if present
+Pods/
+
+# Scheme Management
+*.xcscheme
+*.xcworkspacedata
+
+# Swift Package Resolution Cache
+.xcresult/
