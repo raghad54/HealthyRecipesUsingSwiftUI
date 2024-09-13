@@ -11,7 +11,7 @@ struct FilterBarView: View {
     @Binding var selectedFilter: String
     var onFilterChange: (String) -> Void
     
-    let filters = ["ALL", "Low Sugar", "Dairy-Free" ,"Vegan"] // Example filters
+    let filters = ["ALL", "Low Sugar", "Dairy-Free" ,"Vegan"] 
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -22,7 +22,7 @@ struct FilterBarView: View {
                         onFilterChange(filter)
                     }) {
                         Text(filter)
-                            .padding(.horizontal, 16) // Adjust padding to fit text
+                            .padding(.horizontal, 16) 
                             .padding(.vertical, 8)
                             .background(selectedFilter == filter ? Color.blue : Color.gray)
                             .foregroundColor(.white)
