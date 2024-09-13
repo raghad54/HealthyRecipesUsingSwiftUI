@@ -1,7 +1,7 @@
 # Healthy Recipes App
 
 ## Overview
-The Healthy Recipes App is a SwiftUI application that helps users find and view healthy recipes. It integrates with the Edamam Recipe Search API to provide a variety of recipes based on user search queries and filters.
+The Healthy Recipes App is a SwiftUI and Combine application that helps users find and view healthy recipes. It integrates with the Edamam Recipe Search API to provide a variety of recipes based on user search queries and filters.
 
 ## Features
 - Search for recipes using keywords.
