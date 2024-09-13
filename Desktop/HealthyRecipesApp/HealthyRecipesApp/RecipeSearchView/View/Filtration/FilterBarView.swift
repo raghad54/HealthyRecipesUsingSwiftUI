@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct FilterBarView: View {
     @Binding var selectedFilter: String
     var onFilterChange: (String) -> Void
@@ -25,11 +23,11 @@ struct FilterBarView: View {
                     }) {
                         Text(filter)
                             .padding(.horizontal, 16) // Adjust padding to fit text
-                            .padding(.vertical, 8) // Add vertical padding for height
+                            .padding(.vertical, 8)
                             .background(selectedFilter == filter ? Color.blue : Color.gray)
                             .foregroundColor(.white)
-                            .clipShape(Capsule()) // Rounded edges
-                            .shadow(radius: 2) // Optional: Add a shadow for better visibility
+                            .clipShape(Capsule())
+                            .shadow(radius: 2) 
                     }
                 }
             }
@@ -38,10 +36,7 @@ struct FilterBarView: View {
     }
 }
 
-
-
 #Preview {
     FilterBarView(selectedFilter: .constant("ALL")) { _ in
-        // No action needed for preview
     }
 }

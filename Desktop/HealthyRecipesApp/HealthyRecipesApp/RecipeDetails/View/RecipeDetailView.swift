@@ -2,19 +2,22 @@
 //  RecipeDetailView.swift
 //  HealthyRecipesApp
 //
-//  Created by Raghad's Mac on 09/09/2024.
+//  Created by Raghad's Mac on 11/09/2024.
 //
 
 import SwiftUI
 
-
 struct RecipeDetailView: View {
-    let recipe: Recipe
-    
+    @StateObject private var viewModel: RecipeDetailViewModel
+
+    init(recipe: Recipe) {
+        _viewModel = StateObject(wrappedValue: RecipeDetailViewModel(recipe: recipe))
+    }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                AsyncImage(url: URL(string: recipe.image)) { image in
+                AsyncImage(url: URL(string: viewModel.recipe.image)) { image in
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -25,37 +28,26 @@ struct RecipeDetailView: View {
                 .cornerRadius(10)
                 .padding()
 
-                Text(recipe.label)
+                Text(viewModel.recipe.label)
                     .font(.title)
                     .fontWeight(.bold)
                     .padding([.leading, .trailing])
-                
-                HStack {
-                    Text("Calories: \(String(format: "%.2f", recipe.calories))")
-                    Spacer()
-                    Text("Total Weight: \(String(format: "%.2f", recipe.totalWeight)) g")
-                }
-                .font(.subheadline)
-                .padding([.leading, .trailing, .top])
-                
-                if recipe.totalTime > 0 {
-                    Text("Total Time: \(Int(recipe.totalTime)) minutes")
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Calories: \(viewModel.formattedCalories)")
                         .font(.subheadline)
-                        .padding([.leading, .trailing, .top])
-                } else {
-                    Text("Total Time: 0.0")
+                        .padding([.leading, .trailing, .top], 4)
+
+                    Text("Total Time: \(viewModel.formattedTotalTime)")
                         .font(.subheadline)
-                        .padding([.leading, .trailing, .top])
+                        .padding([.leading, .trailing, .top], 4)
                 }
-                
-                Spacer()
+                .font(.system(size: 16)) 
+                .padding(.vertical, 4)
+                .padding(.horizontal, 8)
             }
-            .navigationTitle(recipe.label)
+            .navigationTitle(viewModel.recipe.label)
             .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
-
-
-
-

@@ -5,13 +5,12 @@
 //  Created by Raghad's Mac on 09/09/2024.
 //
 
-
 import SwiftUI
 
 struct RecipeSearchView: View {
     @State private var searchText = ""
     @State private var selectedFilter = "ALL"
-    @StateObject var viewModel = RecipeViewModel()
+    @StateObject var viewModel = RecipeViewModel(recipeService: RecipeService())
     
     var body: some View {
         NavigationView {
@@ -26,13 +25,15 @@ struct RecipeSearchView: View {
                     Button(action: {
                         performSearch()
                     }) {
-                        Image(systemName: "magnifyingglass")
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .clipShape(Circle())
-                    }
-                }
+                    Image(systemName: "magnifyingglass")
+                        .padding()
+                        .background(searchText.isEmpty ? Color.gray : Color.blue) // Change color based on state
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                   }
+                  .frame(width: 44, height: 44)
+                  .disabled(searchText.isEmpty) // Disable button if searchText is empty
+            }
                 
                 FilterBarView(selectedFilter: $selectedFilter, onFilterChange: { filter in
                     self.selectedFilter = filter
@@ -45,7 +46,7 @@ struct RecipeSearchView: View {
                         let filters = selectedFilter == "ALL" ? [] : [selectedFilter]
                         viewModel.loadMore(query: searchText, filters: filters)
                     },
-                    isLoading: viewModel.isLoading
+                    isLoading: $viewModel.isLoading, searchText: self.searchText 
                 )
             }
             .padding()
@@ -53,8 +54,11 @@ struct RecipeSearchView: View {
         }
     }
     
+    // Function to handle search
     private func performSearch() {
         let filters = selectedFilter == "ALL" ? [] : [selectedFilter]
+        viewModel.recipes.removeAll()
+        viewModel.currentPage = 0
         viewModel.searchRecipes(query: searchText, filters: filters)
     }
 }

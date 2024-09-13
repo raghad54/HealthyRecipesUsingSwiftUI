@@ -10,67 +10,49 @@ import SwiftUI
 struct RecipeListView: View {
     let recipes: [Recipe]
     let loadMore: () -> Void
-    let isLoading: Bool
+    @Binding var isLoading: Bool
+    @State private var scrollViewOffset: CGFloat = 0
+    var searchText: String // To check if searchText is empty
     
     var body: some View {
-        List {
-            ForEach(recipes) { recipe in
-                NavigationLink(destination: RecipeDetailView(recipe: recipe)) {
-                    RecipeRow(recipe: recipe)
-                }
-                .onAppear {
-                    if recipe == recipes.last {
-                        loadMore()
+        GeometryReader { geometry in
+            List {
+                ForEach(recipes) { recipe in
+                    NavigationLink(destination: RecipeDetailView(recipe: recipe)) {
+                        RecipeRow(recipe: recipe)
                     }
                 }
+                
+                if isLoading {
+                    ProgressView()
+                        .frame(maxWidth: .infinity)
+                }
             }
-            
-            if isLoading {
-                ProgressView()
-                    .frame(maxWidth: .infinity)
-            }
-        }
-        .onAppear {
-            // Optionally, trigger load more when the view appears
-            loadMore()
-        }
-        .onChange(of: recipes.count) { _ in
-            // Trigger load more when user scrolls close to the end of the list
-            if isNearBottom() {
-                loadMore()
+            .background(GeometryReader { innerGeometry in
+                Color.clear
+                    .preference(key: ScrollOffsetPreferenceKey.self, value: innerGeometry.frame(in: .global).maxY)
+            })
+            .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
+                scrollViewOffset = value
+                if isNearBottom(geometry: geometry) && !searchText.isEmpty {
+                    loadMore() // Only load more if searchText is not empty
+                }
             }
         }
     }
     
-    private func isNearBottom() -> Bool {
-        // Check if the user is close to the bottom of the list
-        let listHeight = UIScreen.main.bounds.height
-        let bottomEdge = listHeight + 100 // Adjust as needed
-        return bottomEdge >= UIScreen.main.bounds.height
+    private func isNearBottom(geometry: GeometryProxy) -> Bool {
+        let threshold: CGFloat = 50
+        let contentHeight = geometry.size.height
+        let scrollViewHeight = geometry.size.height
+        return (scrollViewOffset + scrollViewHeight) > contentHeight - threshold
     }
 }
 
-struct RecipeRow: View {
-    let recipe: Recipe
-
-    var body: some View {
-        HStack {
-            AsyncImage(url: URL(string: recipe.image)) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            } placeholder: {
-                ProgressView()
-            }
-            .frame(width: 100, height: 100)
-            .cornerRadius(10)
-            
-            VStack(alignment: .leading) {
-                Text(recipe.label)
-                    .font(.headline)
-                Text(recipe.source)
-                    .font(.subheadline)
-            }
-        }
+struct ScrollOffsetPreferenceKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+    
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = nextValue()
     }
 }
