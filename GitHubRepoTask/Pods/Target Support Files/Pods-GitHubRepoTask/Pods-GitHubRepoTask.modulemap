@@ -1,6 +1,0 @@
-framework module Pods_GitHubRepoTask {
-  umbrella header "Pods-GitHubRepoTask-umbrella.h"
-
-  export *
-  module * { export * }
-}
